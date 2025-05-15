@@ -1,0 +1,269 @@
+<!-- Sección de Título para "Juegos Interactivos" -->
+<div class="seccion-juegos">
+  <h2>🎮 Juegos Interactivos</h2>
+  <p>¡En nuestra web no solo vendemos llaveros, también te divertimos!
+Disfruta de nuestros juegos exclusivos pensados para que vivas una experiencia única mientras descubres el mundo de los llaveros personalizados</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+.seccion-juegos {
+  max-width: 700px;
+  margin: 50px auto;
+  padding: 20px;
+  border-left: 6px solid #3498db;
+  background-color: #f0f8ff;
+  border-radius: 10px;
+  text-align: left;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.seccion-juegos h2 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 26px;
+}
+
+.seccion-juegos p {
+  margin-top: 8px;
+  color: #555;
+}
+</style>
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Juegos Interactivos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      text-align: center;
+    }
+    #pregunta {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    .opcion {
+      display: block;
+      padding: 12px 20px;
+      margin: 10px auto;
+      background-color: #f0f0f0;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 300px;
+      transition: background 0.3s;
+    }
+    .opcion:hover {
+      background-color: #d6f3ff;
+    }
+    .correcta {
+      background-color: #c8f7c5 !important;
+      border-color: #27ae60 !important;
+    }
+    .incorrecta {
+      background-color: #f8d7da !important;
+      border-color: #c0392b !important;
+    }
+    #resultado {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    #reiniciar {
+      display: none;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🧠 Adivina el Llavero Colombiano</h2>
+  <p>¿Cuál llavero representa esta ciudad o símbolo?</p>
+
+  <div id="pregunta"></div>
+  <div id="opciones"></div>
+  <div id="resultado"></div>
+  <button id="reiniciar">Jugar otra vez</button>
+
+  <script>
+    const preguntas = [
+      {
+        texto: "Un llavero con una palenquera y frutas tropicales representa:",
+        opciones: ["Cartagena", "Medellín", "Manizales"],
+        correcta: 0
+      },
+      {
+        texto: "Un llavero con una silueta de la piedra del Peñol representa:",
+        opciones: ["Cali", "Guatapé", "Tunja"],
+        correcta: 1
+      },
+      {
+        texto: "Un llavero con una taza de café y montañas verdes representa:",
+        opciones: ["Armenia", "Barranquilla", "Bogotá"],
+        correcta: 0
+      },
+      {
+        texto: "Un llavero con una cumbia y colores vivos representa:",
+        opciones: ["Santa Marta", "Barranquilla", "Neiva"],
+        correcta: 1
+      },
+      {
+        texto: "Un llavero con una figura de la catedral de sal representa:",
+        opciones: ["Zipaquirá", "Medellín", "Pasto"],
+        correcta: 0
+      }
+    ];
+
+    let preguntaActual;
+
+    function cargarPregunta() {
+      const aleatoria = preguntas[Math.floor(Math.random() * preguntas.length)];
+      preguntaActual = aleatoria;
+
+      document.getElementById("pregunta").innerText = aleatoria.texto;
+      const opcionesDiv = document.getElementById("opciones");
+      opcionesDiv.innerHTML = "";
+      document.getElementById("resultado").innerText = "";
+      document.getElementById("reiniciar").style.display = "none";
+
+      aleatoria.opciones.forEach((opcion, index) => {
+        const btn = document.createElement("div");
+        btn.className = "opcion";
+        btn.innerText = opcion;
+        btn.onclick = () => verificar(index, btn);
+        opcionesDiv.appendChild(btn);
+      });
+    }
+
+    function verificar(seleccion, boton) {
+      const correcto = preguntaActual.correcta;
+      const opciones = document.querySelectorAll(".opcion");
+
+      opciones.forEach((op, i) => {
+        op.style.pointerEvents = "none";
+        if (i === correcto) op.classList.add("correcta");
+        if (i === seleccion && i !== correcto) op.classList.add("incorrecta");
+      });
+
+      document.getElementById("resultado").innerText =
+        seleccion === correcto ? "✅ ¡Correcto!" : "❌ Incorrecto. Era: " + preguntaActual.opciones[correcto];
+
+      document.getElementById("reiniciar").style.display = "inline-block";
+    }
+
+    document.getElementById("reiniciar").onclick = cargarPregunta;
+
+    cargarPregunta();
+  </script>
+
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Encuentra el Llavero Especial</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    h2 {
+      margin-bottom: 10px;
+    }
+    #grid {
+      display: grid;
+      grid-template-columns: repeat(4, 80px);
+      grid-gap: 15px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .llavero {
+      width: 80px;
+      height: 80px;
+      background-color: #f4f4f4;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      transition: background 0.3s;
+    }
+    .llavero:hover {
+      background-color: #e0e0e0;
+    }
+    .ganaste {
+      background-color: #c8f7c5 !important;
+      border-color: #27ae60 !important;
+    }
+    .perdiste {
+      background-color: #f8d7da !important;
+      border-color: #c0392b !important;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🔍 Encuentra el Llavero Especial</h2>
+  <p>Haz clic en uno de los llaveros y encuentra el único que es exclusivo 🔑</p>
+
+  <div id="grid"></div>
+  <p id="mensaje"></p>
+
+  <script>
+    const grid = document.getElementById('grid');
+    const mensaje = document.getElementById('mensaje');
+    const total = 12;
+    const especial = Math.floor(Math.random() * total);
+
+    for (let i = 0; i < total; i++) {
+      const div = document.createElement('div');
+      div.classList.add('llavero');
+      div.innerHTML = '🔑';
+      div.addEventListener('click', () => {
+        if (i === especial) {
+          div.classList.add('ganaste');
+          mensaje.innerHTML = '🎉 ¡Encontraste el llavero exclusivo!';
+        } else {
+          div.classList.add('perdiste');
+          mensaje.innerHTML = '❌ Ese no era... ¡intenta de nuevo!';
+        }
+        // Desactivar todos los llaveros
+        document.querySelectorAll('.llavero').forEach(btn => btn.style.pointerEvents = 'none');
+      });
+      grid.appendChild(div);
+    }
+  </script>
+
+</body>
+
+</html>
+
+
+
